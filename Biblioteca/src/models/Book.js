@@ -1,18 +1,19 @@
-// models/Book.js
 const mongoose = require('mongoose');
 
-// Definir o esquema para o livro
+// Definindo o esquema de Livro
 const BookSchema = new mongoose.Schema({
   title: { type: String, required: true },
   author: { type: String, required: true },
   year: { type: Number, required: true },
   pages: { type: Number, required: true },
-  isbn: { type: String, required: true, unique: true } // Campo ISBN
+  isbn: { type: String, required: true, unique: true }
 });
 
-// Criar o modelo a partir do esquema
+// Criando o modelo com base no esquema
 const Book = mongoose.model('Book', BookSchema);
 
 module.exports = Book;
+
+
 
 

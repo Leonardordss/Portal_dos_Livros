@@ -16,3 +16,11 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
     console.error('Erro ao conectar ao MongoDB', error);
     process.exit(1); // Encerra o processo caso não consiga conectar ao banco
   });
+
+
+  const cors = require('cors');
+
+app.use(cors()); // Adicione esta linha antes das rotas
+
+
+
