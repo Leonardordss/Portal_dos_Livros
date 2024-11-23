@@ -18,9 +18,9 @@
 
     <!-- Conteúdo principal -->
     <main>
-      <section class="login-form">
-        <h2>Login</h2>
-        <form @submit.prevent="validarLogin">
+      <section class="cadastro-form">
+        <h2>Cadastro de Usuário</h2>
+        <form @submit.prevent="cadastrarUsuario">
           <label for="username">Usuário:</label>
           <input
             type="text"
@@ -39,12 +39,12 @@
             required
           />
 
-          <button type="submit">Entrar</button>
-
-          <li class="primeiro-acesso">
-            <router-link to="/cadastro">Primeiro Acesso - Cadastrar</router-link>
-          </li>
+          <button type="submit">Cadastrar</button>
         </form>
+      </section>
+
+      <section class="opcoes">
+        <button @click="voltarLogin">Voltar para Login</button>
       </section>
     </main>
 
@@ -79,7 +79,7 @@
 
 <script>
 export default {
-  name: "UserLogin",
+  name: "CadastroUsuario",
   data() {
     return {
       username: "",
@@ -87,10 +87,10 @@ export default {
     };
   },
   methods: {
-    async validarLogin() {
+    async cadastrarUsuario() {
       if (this.username && this.password) {
         try {
-          const resposta = await fetch('http://localhost:5000/api/login', {
+          const resposta = await fetch('http://localhost:5000/api/cadastro', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -104,18 +104,21 @@ export default {
           const dados = await resposta.json();
 
           if (resposta.ok) {
-            alert("Login realizado com sucesso!");
-            this.$router.push('/catalogo'); // Redireciona para o catálogo
+            alert("Usuário cadastrado com sucesso!");
+            this.$router.push('/login'); // Redireciona para login
           } else {
-            alert(dados.message || 'Erro ao realizar login. Tente novamente!');
+            alert(dados.message || 'Erro ao cadastrar. Tente novamente!');
           }
         } catch (erro) {
-          console.error('Erro ao realizar login:', erro);
-          alert('Erro ao realizar login. Tente novamente.');
+          console.error('Erro ao cadastrar usuário:', erro);
+          alert('Erro ao cadastrar. Tente novamente.');
         }
       } else {
         alert('Por favor, preencha todos os campos!');
       }
+    },
+    voltarLogin() {
+      this.$router.push("/login");
     },
   },
 };
@@ -165,28 +168,28 @@ main {
   margin-top: 20px;
 }
 
-.login-form {
+.cadastro-form {
   max-width: 400px;
   margin: 0 auto;
 }
 
-.login-form form {
+.cadastro-form form {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.login-form label {
+.cadastro-form label {
   font-weight: bold;
 }
 
-.login-form input {
+.cadastro-form input {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
-.login-form button {
+.cadastro-form button {
   padding: 10px;
   background-color: #3498db;
   color: white;
@@ -195,13 +198,13 @@ main {
   cursor: pointer;
 }
 
-.login-form button:hover {
+.cadastro-form button:hover {
   background-color: #2980b9;
 }
 
-.primeiro-acesso {
+.opcoes {
   text-align: center;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 footer {
